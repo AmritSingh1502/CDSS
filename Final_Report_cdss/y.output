@@ -1,0 +1,310 @@
+Terminals unused in grammar
+
+    INT
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: switchstm
+
+    2 switchstm: SWITCH '(' ID ')' '{' block '}'
+
+    3 block: caselist
+    4      | caselist defaultstm
+
+    5 caselist: casestm
+    6         | casestm caselist
+
+    7 casestm: CASE NUM ':' assign ';' BREAK ';'
+
+    8 defaultstm: DEFAULT ':' assign ';' BREAK ';'
+
+    9 assign: ID '=' NUM
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 2
+    ')' (41) 2
+    ':' (58) 7 8
+    ';' (59) 7 8
+    '=' (61) 9
+    '{' (123) 2
+    '}' (125) 2
+    error (256)
+    ID (258) 2 9
+    NUM (259) 7 9
+    SWITCH (260) 2
+    CASE (261) 7
+    DEFAULT (262) 8
+    BREAK (263) 7 8
+    INT (264)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (17)
+        on left: 0
+    program (18)
+        on left: 1
+        on right: 0
+    switchstm (19)
+        on left: 2
+        on right: 1
+    block (20)
+        on left: 3 4
+        on right: 2
+    caselist (21)
+        on left: 5 6
+        on right: 3 4 6
+    casestm (22)
+        on left: 7
+        on right: 5 6
+    defaultstm (23)
+        on left: 8
+        on right: 4
+    assign (24)
+        on left: 9
+        on right: 7 8
+
+
+State 0
+
+    0 $accept: . program $end
+
+    SWITCH  shift, and go to state 1
+
+    program    go to state 2
+    switchstm  go to state 3
+
+
+State 1
+
+    2 switchstm: SWITCH . '(' ID ')' '{' block '}'
+
+    '('  shift, and go to state 4
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 program: switchstm .
+
+    $default  reduce using rule 1 (program)
+
+
+State 4
+
+    2 switchstm: SWITCH '(' . ID ')' '{' block '}'
+
+    ID  shift, and go to state 6
+
+
+State 5
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 6
+
+    2 switchstm: SWITCH '(' ID . ')' '{' block '}'
+
+    ')'  shift, and go to state 7
+
+
+State 7
+
+    2 switchstm: SWITCH '(' ID ')' . '{' block '}'
+
+    '{'  shift, and go to state 8
+
+
+State 8
+
+    2 switchstm: SWITCH '(' ID ')' '{' . block '}'
+
+    CASE  shift, and go to state 9
+
+    block     go to state 10
+    caselist  go to state 11
+    casestm   go to state 12
+
+
+State 9
+
+    7 casestm: CASE . NUM ':' assign ';' BREAK ';'
+
+    NUM  shift, and go to state 13
+
+
+State 10
+
+    2 switchstm: SWITCH '(' ID ')' '{' block . '}'
+
+    '}'  shift, and go to state 14
+
+
+State 11
+
+    3 block: caselist .
+    4      | caselist . defaultstm
+
+    DEFAULT  shift, and go to state 15
+
+    $default  reduce using rule 3 (block)
+
+    defaultstm  go to state 16
+
+
+State 12
+
+    5 caselist: casestm .
+    6         | casestm . caselist
+
+    CASE  shift, and go to state 9
+
+    $default  reduce using rule 5 (caselist)
+
+    caselist  go to state 17
+    casestm   go to state 12
+
+
+State 13
+
+    7 casestm: CASE NUM . ':' assign ';' BREAK ';'
+
+    ':'  shift, and go to state 18
+
+
+State 14
+
+    2 switchstm: SWITCH '(' ID ')' '{' block '}' .
+
+    $default  reduce using rule 2 (switchstm)
+
+
+State 15
+
+    8 defaultstm: DEFAULT . ':' assign ';' BREAK ';'
+
+    ':'  shift, and go to state 19
+
+
+State 16
+
+    4 block: caselist defaultstm .
+
+    $default  reduce using rule 4 (block)
+
+
+State 17
+
+    6 caselist: casestm caselist .
+
+    $default  reduce using rule 6 (caselist)
+
+
+State 18
+
+    7 casestm: CASE NUM ':' . assign ';' BREAK ';'
+
+    ID  shift, and go to state 20
+
+    assign  go to state 21
+
+
+State 19
+
+    8 defaultstm: DEFAULT ':' . assign ';' BREAK ';'
+
+    ID  shift, and go to state 20
+
+    assign  go to state 22
+
+
+State 20
+
+    9 assign: ID . '=' NUM
+
+    '='  shift, and go to state 23
+
+
+State 21
+
+    7 casestm: CASE NUM ':' assign . ';' BREAK ';'
+
+    ';'  shift, and go to state 24
+
+
+State 22
+
+    8 defaultstm: DEFAULT ':' assign . ';' BREAK ';'
+
+    ';'  shift, and go to state 25
+
+
+State 23
+
+    9 assign: ID '=' . NUM
+
+    NUM  shift, and go to state 26
+
+
+State 24
+
+    7 casestm: CASE NUM ':' assign ';' . BREAK ';'
+
+    BREAK  shift, and go to state 27
+
+
+State 25
+
+    8 defaultstm: DEFAULT ':' assign ';' . BREAK ';'
+
+    BREAK  shift, and go to state 28
+
+
+State 26
+
+    9 assign: ID '=' NUM .
+
+    $default  reduce using rule 9 (assign)
+
+
+State 27
+
+    7 casestm: CASE NUM ':' assign ';' BREAK . ';'
+
+    ';'  shift, and go to state 29
+
+
+State 28
+
+    8 defaultstm: DEFAULT ':' assign ';' BREAK . ';'
+
+    ';'  shift, and go to state 30
+
+
+State 29
+
+    7 casestm: CASE NUM ':' assign ';' BREAK ';' .
+
+    $default  reduce using rule 7 (casestm)
+
+
+State 30
+
+    8 defaultstm: DEFAULT ':' assign ';' BREAK ';' .
+
+    $default  reduce using rule 8 (defaultstm)
